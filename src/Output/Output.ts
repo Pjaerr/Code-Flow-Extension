@@ -1,14 +1,20 @@
 import * as vscode from 'vscode';
 
-import {GetDataPoints, DataPoint} from '../Data/Data';
+import {DataPoint} from '../Data/DataPoint';
+import {GetDataPoints} from '../Data/Data';
 
 export const ShowDataPoints = () =>
 {
 	let dataPoints = GetDataPoints();
 
-	if (dataPoints !== undefined)
+	if (dataPoints === undefined)
 	{
-		let AllDataPointsOutputChannel: vscode.OutputChannel = vscode.window.createOutputChannel("AllDataPoints");
+		return;
+	}
+
+	if (dataPoints.length > 0)
+	{
+		let AllDataPointsOutputChannel = vscode.window.createOutputChannel("AllDataPoints");
 
 		dataPoints.forEach(point => {
 			AllDataPointsOutputChannel.appendLine(DataPoint.getStringRepresentation(point));
@@ -16,9 +22,20 @@ export const ShowDataPoints = () =>
 
 		AllDataPointsOutputChannel.show();
 	}
+	else
+	{
+		vscode.window.showWarningMessage("No Data Points have been added!");
+	}
 };
 
 export const GenerateDiagram = () =>
 {
+	let dataPoints = GetDataPoints();
+
+	if (dataPoints === undefined || dataPoints.length < 2)
+	{
+		return;
+	}
+
 	//Does all of the WebView D3.js stuff -->
 };
