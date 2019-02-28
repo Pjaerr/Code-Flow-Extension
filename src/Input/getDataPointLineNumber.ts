@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 import { isANumber } from '../Utils/ValidateInput';
 
-export const getLineNumber = () =>
+export const getDataPointLineNumber = () =>
 {
 	return new Promise((resolve, reject) =>
 	{

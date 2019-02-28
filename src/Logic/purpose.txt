@@ -1,0 +1,6 @@
+This folder location should hold code separate from the VS Code API/Extension and it should contain code that will
+be doing the "linking" between every data point, it should also not be doing any of the literal diagramming
+as that code will be in Output, but will be fed everything it needs to create a diagram from the code in this folder.
+
+EG: Code in the Logic folder should be taking input or outputting anything, and code in the Input folder or Output folder
+shouldn't be doing any logic.
