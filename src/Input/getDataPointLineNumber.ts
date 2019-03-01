@@ -4,7 +4,7 @@ import { isANumber } from '../Utils/ValidateInput';
 
 export const getDataPointLineNumber = () =>
 {
-	return new Promise((resolve, reject) =>
+	return new Promise<string>((resolve, reject) =>
 	{
 		vscode.window.showInputBox({ prompt: "Line Number", validateInput: isANumber })
 			.then((result: (string | undefined)) =>

@@ -16,10 +16,10 @@ export const CreateDataPoint = () =>
 {
 	let dataPoint = new DataPoint();
 
-	getDataPointLineNumber().then(res => dataPoint.lineNumber = res.toString())
-		.then(getDataPointDetail).then(res => dataPoint.detail = res.toString())
-		.then(getDataPointId).then(res => dataPoint.id = res.toString())
-		.then(getLinkedDataPoint).then(res => dataPoint.linkedDataPointId = res.toString())
+	getDataPointLineNumber().then(res => dataPoint.lineNumber = res)
+		.then(getDataPointDetail).then(res => dataPoint.detail = res)
+		.then(getDataPointId).then(res => dataPoint.id = res)
+		.then(getLinkedDataPoint).then(res => dataPoint.linkedDataPoint = res)
 		.then(() =>
 		{
 			if (vscode.window.activeTextEditor !== undefined)

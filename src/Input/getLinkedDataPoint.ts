@@ -3,29 +3,11 @@ import * as vscode from 'vscode';
 import {DataPoint} from '../Data/DataPoint';
 import {GetDataPoints} from '../Data/Data';
 
-class SelectableDataPoint implements vscode.QuickPickItem
-{
-	label: string;
-	dataPoint: (DataPoint | undefined);
-
-	constructor(dataPoint: (DataPoint | undefined) = undefined, label: (string | undefined) = undefined)
-	{
-		this.dataPoint = dataPoint;
-
-		if (label === undefined || dataPoint === undefined)
-		{
-			this.label = "No Link";
-		}
-		else
-		{
-			this.label = `${dataPoint.id} | ${dataPoint.file}:${dataPoint.lineNumber}`;
-		}
-	}
-}
+let points = new Map<string, DataPoint>();
 
 export const getLinkedDataPoint = () =>
 {
-	return new Promise((resolve, reject) =>
+	return new Promise<(DataPoint | undefined)>((resolve, reject) =>
 	{
 		let dataPoints = GetDataPoints();
 
@@ -36,27 +18,31 @@ export const getLinkedDataPoint = () =>
 			return;
 		}
 
-		let selectableDataPoints: SelectableDataPoint[] = [];
+		let selectableDataPoints: string[] = [];
 
-		selectableDataPoints.push(new SelectableDataPoint());
+		selectableDataPoints.push("No Link");
 
 		dataPoints.forEach(point => {
-			selectableDataPoints.push(new SelectableDataPoint(point));
+			points.set(`${point.id} | ${point.file}:${point.lineNumber}`, point);
+			selectableDataPoints.push(`${point.id} | ${point.file}:${point.lineNumber}`);
 		});
 
-		let customQuickPick = vscode.window.createQuickPick<SelectableDataPoint>();
-		
-		
-		customQuickPick.show(selectableDataPoints, {placeHolder: "Select another Data Point to link to"})
+
+		vscode.window.showQuickPick(selectableDataPoints, {placeHolder: "Select another Data Point to link to"})
 		.then((selection: (string | undefined)) =>
 		{
-			resolve(selection);
+			if (selection !== undefined)
+			{
+				resolve(points.get(selection));
+			}
+			else if (selection === "No Link")
+			{
+				resolve(undefined);
+			}
+			else
+			{
+				reject("Link was undefined");
+			}
 		});
-
-		// vscode.window.showQuickPick(dataPointIds, {placeHolder: "Select another Data Point to link to"})
-		// .then((selection: (string | undefined)) =>
-		// {
-		// 	resolve(selection);
-		// });
 	});
-}
+};
