@@ -8,25 +8,25 @@ import { DataPoint } from '../Data/DataPoint';
 import { getDataPointLineNumber } from './getDataPointLineNumber';
 import { getDataPointDetail } from './getDataPointDetail';
 import { getDataPointId } from './getDataPointId';
-import {getLinkedDataPoint} from './getLinkedDataPoint';
+import { getLinkedDataPoint } from './getLinkedDataPoint';
+import {getDataPointFile} from './getDataPointFile';
 
-
-//TODO: Make this code more readable/more "seperated"
 export const CreateDataPoint = () =>
 {
 	let dataPoint = new DataPoint();
 
-	getDataPointLineNumber().then(res => dataPoint.lineNumber = res)
-		.then(getDataPointDetail).then(res => dataPoint.detail = res)
-		.then(getDataPointId).then(res => dataPoint.id = res)
-		.then(getLinkedDataPoint).then(res => dataPoint.linkedDataPoint = res)
+	getDataPointLineNumber()
+		.then(lineNumber => dataPoint.lineNumber = lineNumber)
+		.then(getDataPointDetail)
+		.then(detail => dataPoint.detail = detail)
+		.then(getDataPointId)
+		.then(id => dataPoint.id = id)
+		.then(getLinkedDataPoint)
+		.then(linkedDataPoint => dataPoint.linkedDataPoint = linkedDataPoint)
+		.then(getDataPointFile)
+		.then(file => dataPoint.file = file)
 		.then(() =>
 		{
-			if (vscode.window.activeTextEditor !== undefined)
-			{
-				dataPoint.file = vscode.workspace.asRelativePath(vscode.window.activeTextEditor.document.fileName);
-			}
-			
 			PushDataPoint(dataPoint);
 
 			vscode.window.showInformationMessage("Added data point with ID: " + dataPoint.id);

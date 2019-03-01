@@ -1,19 +1,13 @@
 export class DataPoint
 {
-	lineNumber: string;
-	detail: string;
-	id: string;
-	file: string;
-	linkedDataPoint: (DataPoint | undefined);
+	lineNumber: string = "";
+	detail: string = "";
+	id: string = "";
+	file: string = "";
+	//TODO: Probably make this an array of data points.\
+	linkedDataPoint: (DataPoint | undefined) = undefined;
+	
 
-	constructor(lineNumber = "", detail = "", id = "", file = "", linkedDataPoint: (DataPoint | undefined) = undefined)
-	{
-		this.lineNumber = lineNumber;
-		this.detail = detail;
-		this.id = id;
-		this.file = file;
-		this.linkedDataPoint = linkedDataPoint;
-	}
 
 	static getStringRepresentation = (dataPoint: DataPoint) =>
 	{

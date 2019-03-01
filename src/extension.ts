@@ -20,6 +20,13 @@ const enum CommandOption
 
 const OnExtensionLoad = () =>
 {
+	//TODO: This doesn't work -> need to check if a document is open or not
+	if (vscode.window.activeTextEditor === undefined)
+	{
+		vscode.window.showErrorMessage("You must have a file open to use this extension");
+		return;
+	}
+
 	//Give the user an option for every value in the CommandOption enum using a quickpick selector
 	vscode.window.showQuickPick([CommandOption.AddDataPoint, CommandOption.ShowDataPoints, CommandOption.GenerateDiagram])
 		.then((selection: (string | undefined)) =>
@@ -40,8 +47,8 @@ const OnExtensionLoad = () =>
 				case CommandOption.GenerateDiagram:
 					GenerateDiagram();
 					break;
+				//TODO: Allow editing of data points so more links can be added.
 			}
-
 		});
 };
 
