@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
-import {DataPoint} from '../Data/DataPoint';
-import {GetDataPoints} from '../Data/Data';
+import { DataPoint } from '../Data/DataPoint';
+import { GetDataPoints } from '../Data/Data';
 
 let points = new Map<string, DataPoint>();
 
@@ -14,7 +14,7 @@ export const getLinkedDataPoint = () =>
 		if (dataPoints === undefined)
 		{
 			reject("Data Points is undefined");
-			
+
 			return;
 		}
 
@@ -22,27 +22,28 @@ export const getLinkedDataPoint = () =>
 
 		selectableDataPoints.push("No Link");
 
-		dataPoints.forEach(point => {
+		dataPoints.forEach(point =>
+		{
 			points.set(`${point.id} | ${point.file}:${point.lineNumber}`, point);
 			selectableDataPoints.push(`${point.id} | ${point.file}:${point.lineNumber}`);
 		});
 
 
-		vscode.window.showQuickPick(selectableDataPoints, {placeHolder: "Select another Data Point to link to"})
-		.then((selection: (string | undefined)) =>
-		{
-			if (selection !== undefined)
+		vscode.window.showQuickPick(selectableDataPoints, { placeHolder: "Select another Data Point to link to" })
+			.then((selection: (string | undefined)) =>
 			{
-				resolve(points.get(selection));
-			}
-			else if (selection === "No Link")
-			{
-				resolve(undefined);
-			}
-			else
-			{
-				reject("Link was undefined");
-			}
-		});
+				if (selection)
+				{
+					resolve(points.get(selection));
+				}
+				else if (selection === "No Link")
+				{
+					resolve(undefined);
+				}
+				else
+				{
+					reject("Link was undefined");
+				}
+			});
 	});
 };

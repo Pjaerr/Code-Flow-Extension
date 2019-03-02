@@ -4,13 +4,13 @@ export const getDataPointFile = () =>
 {
 	return new Promise<string>((resolve, reject) =>
 	{
-		//TODO: This doesn't work
-		if (vscode.window.activeTextEditor === undefined)
+		if (vscode.window.activeTextEditor)
 		{
-			reject("No active text editor open to grab data point file from");
-			return;
+			resolve(vscode.workspace.asRelativePath(vscode.window.activeTextEditor.document.fileName));
 		}
-
-		resolve(vscode.workspace.asRelativePath(vscode.window.activeTextEditor.document.fileName));
+		else
+		{
+			reject("The active text editor is undefined");
+		}
 	});
 };

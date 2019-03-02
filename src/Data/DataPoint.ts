@@ -4,7 +4,7 @@ export class DataPoint
 	detail: string = "";
 	id: string = "";
 	file: string = "";
-	//TODO: Probably make this an array of data points.\
+	// Probably make this an array of data points.\
 	linkedDataPoint: (DataPoint | undefined) = undefined;
 
 

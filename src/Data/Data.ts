@@ -13,7 +13,7 @@ export const PushDataPoint = (dataPoint: DataPoint) =>
 {
 	let currentDataPoints: (DataPoint[] | undefined) = ExtensionContext.globalState.get("DataPoints");
 
-	if (currentDataPoints !== undefined)
+	if (currentDataPoints)
 	{
 		currentDataPoints.push(dataPoint);
 

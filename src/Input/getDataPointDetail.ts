@@ -7,7 +7,7 @@ export const getDataPointDetail = () =>
 		vscode.window.showInputBox({ prompt: "Information about the selected line" })
 			.then((result: (string | undefined)) =>
 			{
-				result !== undefined ? resolve(result) : reject("Result was undefined in getDataPointDetail()");
+				result ? resolve(result) : reject("Result was undefined in getDataPointDetail()");
 			});
 	});
 };
