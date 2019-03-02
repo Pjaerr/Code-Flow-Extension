@@ -6,12 +6,11 @@ export class DataPoint
 	file: string = "";
 	//TODO: Probably make this an array of data points.\
 	linkedDataPoint: (DataPoint | undefined) = undefined;
-	
 
 
 	static getStringRepresentation = (dataPoint: DataPoint) =>
 	{
-		return(`
+		return (`
 			|=======================================
 			|	ID: ${dataPoint.id}					
 			|	------------------------------------
