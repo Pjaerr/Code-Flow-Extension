@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 
 import { DataPoint } from '../Data/DataPoint';
 import { GetDataPoints } from '../Data/Data';
+import { isDataPointInArray } from '../Utils/isDataPointInArray';
 
 let dataPoints: DataPoint[] | undefined = [];
 
@@ -18,7 +19,7 @@ const setupDataPoints = (pointsToExclude?: DataPoint[]) => {
   }
 
   dataPoints.forEach(point => {
-    if (pointsToExclude === undefined || !pointsToExclude.includes(point)) {
+    if (pointsToExclude === undefined || !isDataPointInArray(pointsToExclude, point)) {
       dataPointsMap.set(`${point.id} | ${point.file}:${point.lineNumber}`, point);
     }
   });
