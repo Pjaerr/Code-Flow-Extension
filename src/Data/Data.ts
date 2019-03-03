@@ -12,6 +12,14 @@ export const PushDataPoint = (dataPoint: DataPoint) => {
   let currentDataPoints: DataPoint[] | undefined = ExtensionContext.globalState.get('DataPoints');
 
   if (currentDataPoints) {
+    //If the data point already exists, remove the previous version
+    for (let i = currentDataPoints.length - 1; i > 0; i--) {
+      if (currentDataPoints[i].id === dataPoint.id) {
+        currentDataPoints.splice(i, 1);
+        i = 0;
+      }
+    }
+
     currentDataPoints.push(dataPoint);
 
     ExtensionContext.globalState.update('DataPoints', currentDataPoints);

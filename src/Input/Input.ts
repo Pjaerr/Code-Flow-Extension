@@ -46,6 +46,9 @@ export const AddAdditionalLinkToDataPoint = () => {
           }
 
           PushDataPoint(currentDataPoint);
+          vscode.window.showInformationMessage(
+            'Added addtional link to Data Point: ' + currentDataPoint.id
+          );
         }
       );
     }
