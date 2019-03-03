@@ -8,7 +8,7 @@ import { DataPoint } from '../Data/DataPoint';
 import { getDataPointLineNumber } from './getDataPointLineNumber';
 import { getDataPointDetail } from './getDataPointDetail';
 import { getDataPointId } from './getDataPointId';
-import { getLinkedDataPoint } from './getLinkedDataPoint';
+import { getDataPoint, getLinkedDataPoint } from './getDataPoint';
 import { getDataPointFile } from './getDataPointFile';
 
 export const CreateDataPoint = () => {
@@ -37,15 +37,9 @@ export const CreateDataPoint = () => {
 };
 
 export const AddAdditionalLinkToDataPoint = () => {
-  let existingLinkedDataPoints: DataPoint[] = [];
-
-  getLinkedDataPoint().then(currentDataPoint => {
+  getDataPoint().then(currentDataPoint => {
     if (currentDataPoint !== undefined) {
-      currentDataPoint.linkedDataPoints.forEach(point => {
-        existingLinkedDataPoints.push(point);
-      });
-
-      getLinkedDataPoint([currentDataPoint, ...existingLinkedDataPoints]).then(
+      getLinkedDataPoint([currentDataPoint, ...currentDataPoint.linkedDataPoints]).then(
         newLinkedDataPoint => {
           if (newLinkedDataPoint) {
             currentDataPoint.linkedDataPoints.push(newLinkedDataPoint);
