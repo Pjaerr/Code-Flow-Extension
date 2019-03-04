@@ -2,8 +2,6 @@ import * as vscode from 'vscode';
 
 import { DataPoint } from '../Data/DataPoint';
 import { GetDataPoints } from '../Data/Data';
-import { getDataPointId } from '../Input/getDataPointId';
-import { SetupDiagram } from './diagram';
 
 export const ShowDataPoints = () => {
   let dataPoints = GetDataPoints();
@@ -62,6 +60,15 @@ export const GenerateDiagram = () => {
    *
    *  ! Will need to figure out how to shutdown the node server when the diagram
    *  ! is closed or user no longer needs it.
+   *  * ^ Could use smth like web sockets to see when someone connects and close it
+   *  * if that connection leaves.
    *
+   *
+   * If not using server ->
+   * need way to write html and js as normal with syntax highlighting and everything
+   * and then compile it down into code that a vscode webview can use.
+   *
+   * --> If going this route, would also be nice to have the html and css (better yet if SASS)
+   * --> within the working directory and never have to edit any files in the _out_ directory
    */
 };
