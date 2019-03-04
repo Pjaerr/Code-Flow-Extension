@@ -51,6 +51,17 @@ export const GenerateDiagram = () => {
   dataPoints.push(datapoint1);
   dataPoints.push(datapoint2);
 
-  //Call diagram.ts here and open the index.html in a browser window or smth
-  SetupDiagram(dataPoints);
+  /** Creating the Diagram externally.
+   *
+   * * Local diagram.html and diagram.js files
+   *
+   * --> In this file, host a local node/http/express server that will
+   * --> serve the aforementioned files and will have an endpoint that
+   * --> returns the DataPoints when called which can be done in the diagram.js
+   * --> file that is being hosted locally.
+   *
+   *  ! Will need to figure out how to shutdown the node server when the diagram
+   *  ! is closed or user no longer needs it.
+   *
+   */
 };
