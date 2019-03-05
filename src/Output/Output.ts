@@ -67,3 +67,8 @@ export const GenerateDiagram = () => {
     }
   });
 };
+
+/** Take the HTML and CSS files from the Output folder and just re-write them like with json file */
+const generateHTML = () => {};
+
+const generateCSS = () => {};
