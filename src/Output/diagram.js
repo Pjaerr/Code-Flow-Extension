@@ -1,1 +1,4 @@
-fetch('/getDataPoints').then(response => console.log(response));
+/** @type {Array} */
+const DataPoints = dataPoints;
+
+console.log(DataPoints);
