@@ -47,3 +47,19 @@ export const GetDataPoints = () => {
 
   return DataPoints ? DataPoints : undefined;
 };
+
+export const GetDataPointFromGUID = (guid: string) => {
+  const dataPoints = GetDataPoints();
+
+  if (!dataPoints) {
+    throw Error('No DataPoints in the global state.');
+  }
+
+  for (let point of dataPoints) {
+    if (point.id === guid) {
+      return point;
+    }
+  }
+
+  throw Error('GUID must exist on a DataPoint');
+};

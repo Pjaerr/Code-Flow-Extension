@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import { PushDataPoint } from '../Data/Data';
+import { PushDataPoint, GetDataPointFromGUID } from '../Data/Data';
 import { DataPoint } from '../Data/DataPoint';
 
 import { getLineNumberFromUser } from './UserInput/getLineNumberFromUser';
@@ -23,7 +23,7 @@ export async function CreateDataPoint() {
   let linkedDataPoint = await getLinkedDataPointFromUser();
 
   if (linkedDataPoint !== undefined) {
-    dataPoint.linkedDataPoints.push(linkedDataPoint);
+    dataPoint.linkedDataPoints.push(linkedDataPoint.id);
   }
 
   dataPoint.file = await getActiveFile();
@@ -40,13 +40,17 @@ export async function AddAdditionalLinkToDataPoint() {
   let currentDataPoint = await getDataPointFromUser();
 
   if (currentDataPoint !== undefined) {
+    let linkedDataPoints: DataPoint[] = currentDataPoint.linkedDataPoints.map(dataPointGuid => {
+      return GetDataPointFromGUID(dataPointGuid);
+    });
+
     let newLinkedDataPoint = await getLinkedDataPointFromUser([
       currentDataPoint,
-      ...currentDataPoint.linkedDataPoints
+      ...linkedDataPoints
     ]);
 
     if (newLinkedDataPoint) {
-      currentDataPoint.linkedDataPoints.push(newLinkedDataPoint);
+      currentDataPoint.linkedDataPoints.push(newLinkedDataPoint.id);
     }
 
     PushDataPoint(currentDataPoint);
