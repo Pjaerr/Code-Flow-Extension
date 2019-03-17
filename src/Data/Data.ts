@@ -3,11 +3,22 @@ import { DataPoint } from './DataPoint';
 
 let ExtensionContext: ExtensionContext;
 
+/**
+ * Setups the global state object with a DataPoints array
+ *
+ * @param context The ExtensionContext whose globalState will be used.
+ */
 export const InitialiseData = (context: ExtensionContext) => {
   ExtensionContext = context;
   ExtensionContext.globalState.update('DataPoints', []);
 };
 
+/**
+ * Adds a new DataPoint to the global state if it doesn't exist, and updates
+ * the existing DataPoint if it does.
+ *
+ * @param dataPoint The DataPoint to add.
+ */
 export const PushDataPoint = (dataPoint: DataPoint) => {
   let currentDataPoints: DataPoint[] | undefined = ExtensionContext.globalState.get('DataPoints');
 
@@ -26,6 +37,11 @@ export const PushDataPoint = (dataPoint: DataPoint) => {
   }
 };
 
+/**
+ * Grabs the DataPoint array from global state.
+ *
+ * @return An array of DataPoints or undefined if none exist.
+ */
 export const GetDataPoints = () => {
   let DataPoints: DataPoint[] | undefined = ExtensionContext.globalState.get('DataPoints');
 

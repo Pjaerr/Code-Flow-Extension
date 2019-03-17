@@ -6,6 +6,9 @@ import { GetDataPoints } from '../Data/Data';
 const fs = require('fs');
 const opn = require('opn');
 
+/**
+ * Displays all of the DataPoints from the global state onto the VS Code Output window.
+ */
 export const ShowDataPoints = () => {
   let dataPoints = GetDataPoints();
 
@@ -26,6 +29,9 @@ export const ShowDataPoints = () => {
   }
 };
 
+/**
+ * Generates a diagram from the DataPoints and their links in the global state.
+ */
 export const GenerateDiagram = () => {
   //   let dataPoints = GetDataPoints();
 

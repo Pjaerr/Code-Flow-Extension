@@ -10,6 +10,9 @@ import { getDataPointFromUser, getLinkedDataPointFromUser } from './UserInput/ge
 import { generateDataPointId } from './generateDataPointId';
 import { getActiveFile } from './getActiveFile';
 
+/**
+ * Asynchronous function that creates a new DataPoint and adds it to the global state.
+ */
 export async function CreateDataPoint() {
   let dataPoint = new DataPoint();
 
@@ -29,6 +32,10 @@ export async function CreateDataPoint() {
   vscode.window.showInformationMessage('Added data point with ID: ' + dataPoint.id);
 }
 
+/**
+ * Asynchronous function that adds an additional link to an existing DataPoint and updates
+ * it on the global state.
+ */
 export async function AddAdditionalLinkToDataPoint() {
   let currentDataPoint = await getDataPointFromUser();
 

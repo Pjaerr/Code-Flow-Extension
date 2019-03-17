@@ -2,6 +2,11 @@ import * as vscode from 'vscode';
 
 import { isANumber } from '../../Utils/ValidateInput';
 
+/**
+ * Allow the user to enter a line number from the given file.
+ *
+ * @return a Promise that resolves an inputted number.
+ */
 export const getLineNumberFromUser = () => {
   return new Promise<string>((resolve, reject) => {
     vscode.window

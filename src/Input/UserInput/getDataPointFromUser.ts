@@ -6,8 +6,14 @@ import { isDataPointInArray } from '../../Utils/isDataPointInArray';
 
 let dataPoints: DataPoint[] | undefined = [];
 
+//DataPoint objects mapped to strings to be presented on the user interface
 let dataPointsMap: Map<string, DataPoint> = new Map();
 
+/**
+ * Sets up the dataPointsMap for each dataPoint
+ *
+ * @param pointsToExclude An array of DataPoint objects that shouldn't be included in the dataPointsMap
+ */
 const setupDataPoints = (pointsToExclude?: DataPoint[]) => {
   dataPoints = [];
   dataPointsMap.clear();
@@ -25,6 +31,13 @@ const setupDataPoints = (pointsToExclude?: DataPoint[]) => {
   });
 };
 
+/**
+ * Asynchronous function that shows a VSCode.QuickPick for a list of DataPoint objects
+ *
+ * @param placeholder A string to be shown telling the user what the input does
+ * @param extraSelectableDataPoints An array of strings that map to the dataPointsMap
+ * @return a DataPoint from the dataPointsMap matching the chosen string key
+ */
 const showQuickPicker = async (placeHolder: string, extraSelectableDataPoints?: string[]) => {
   let selectableDataPoints: string[] = [];
 
@@ -47,6 +60,11 @@ const showQuickPicker = async (placeHolder: string, extraSelectableDataPoints?: 
   throw Error('Link was undefined');
 };
 
+/**
+ * Let the user choose a DataPoint from all of the DataPoints in the global state.
+ *
+ * @return A Promise that resolves their chosen DataPoint
+ */
 export const getDataPointFromUser = () => {
   return new Promise<DataPoint | undefined>((resolve, reject) => {
     setupDataPoints();
@@ -56,6 +74,13 @@ export const getDataPointFromUser = () => {
   });
 };
 
+/**
+ * Let the user choose a DataPoint from all of the DataPoints in the global state excluding
+ * an array of chosen DataPoints. To be used when allowing the User to select a link to another
+ * DataPoint.
+ *
+ * @return A Promise that resolves their chosen DataPoint
+ */
 export const getLinkedDataPointFromUser = (pointsToExclude?: DataPoint[]) => {
   return new Promise<DataPoint | undefined>((resolve, reject) => {
     setupDataPoints(pointsToExclude);
