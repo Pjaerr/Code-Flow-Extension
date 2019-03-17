@@ -1,9 +1,11 @@
+import { GetDataPointFromGUID } from '../Data/Data';
+
 export class DataPoint {
   lineNumber: string = '';
   detail: string = '';
   id: string = '';
   file: string = '';
-  linkedDataPoints: DataPoint[] = [];
+  linkedDataPoints: string[] = [];
 
   //This is static as we work with DataPoints returned from vscode global storage which doesn't
   //include functions on an instance of a class.
@@ -16,18 +18,20 @@ export class DataPoint {
 			Line Number: ${dataPoint.lineNumber}	
 			Detail: ${dataPoint.detail}	
 			Linked Data Points =>
-				${renderLinkedDataPoints(dataPoint.linkedDataPoints)}
+				${renderLinkedDataPointsAsText(dataPoint.linkedDataPoints)}
 			|=======================================|
 			
 			`;
   };
 }
 
-const renderLinkedDataPoints = (linkedDataPoints: DataPoint[]) => {
+const renderLinkedDataPointsAsText = (linkedDataPoints: string[]) => {
   if (linkedDataPoints.length > 0) {
     let string = '';
 
-    linkedDataPoints.forEach(point => {
+    linkedDataPoints.forEach(pointGUID => {
+      const point = GetDataPointFromGUID(pointGUID);
+
       string += `${point.id} | ${point.file}:${point.lineNumber} \n`;
     });
 

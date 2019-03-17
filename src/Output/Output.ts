@@ -55,7 +55,7 @@ export const GenerateDiagram = () => {
   datapoint2.file = 'javascript/testfile2.js';
   datapoint2.lineNumber = '98';
   datapoint2.detail = 'This is another test';
-  datapoint2.linkedDataPoints = [datapoint1];
+  datapoint2.linkedDataPoints = [datapoint1.id];
 
   dataPoints.push(datapoint1);
   dataPoints.push(datapoint2);
