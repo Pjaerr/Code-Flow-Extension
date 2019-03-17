@@ -1,4 +1,5 @@
-const scssSrcDirectory = './src/Output/diagram.scss';
+const scssSrcDirectory = './src/Output/external/diagram.scss';
+const htmlSrcDirectory = './src/Output/external/diagram.html';
 
 module.exports = function(grunt) {
   grunt.initConfig({
@@ -9,10 +10,22 @@ module.exports = function(grunt) {
         }
       }
     },
+    copy: {
+      main: {
+        files: [{ nonull: true, src: htmlSrcDirectory, dest: './out/Output/diagram.html' }]
+      }
+    },
     watch: {
       sass: {
         files: [scssSrcDirectory],
         tasks: ['sass'],
+        options: {
+          spawn: false
+        }
+      },
+      copy: {
+        files: ['./src/Output/*'],
+        tasks: ['copy'],
         options: {
           spawn: false
         }
@@ -21,7 +34,8 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('default', ['sass', 'copy']);
 };

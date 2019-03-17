@@ -67,7 +67,7 @@ export const GenerateDiagram = () => {
     if (err) {
       console.error(err);
     } else {
-      vscode.window.showInformationMessage('Diagram has been generated!');
+      vscode.window.showInformationMessage('Diagram Generated');
       const panel = vscode.window.createWebviewPanel(
         'codeFlowDiagram',
         'Code Flow Diagram',
@@ -80,6 +80,7 @@ export const GenerateDiagram = () => {
       let diagramJS = '';
       let dataPointsJS = '';
       let diagramCSS = '';
+      let svgJs = '';
 
       //Promisify and async/await this stuff
       fs.readFile(__dirname + '/diagram.js', function(err: any, data: any) {
@@ -91,25 +92,30 @@ export const GenerateDiagram = () => {
           fs.readFile(__dirname + '/diagram.css', function(err: any, data: any) {
             diagramCSS = data;
 
-            panel.webview.html = `
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="utf-8" />
-                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                <title>CodeFlow Diagram</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <style>
-                  ${diagramCSS}
-                </style>
-              </head>
-              <body>
-                <h1 id="hello">Hello VS Code</h1>
-                <script>${dataPointsJS}</script>
-                <script>${diagramJS}</script>
-              </body>
-            </html>
+            fs.readFile(__dirname + '/svg.min.js', function(err: any, data: any) {
+              svgJs = data;
+
+              panel.webview.html = `
+              <!DOCTYPE html>
+              <html>
+                <head>
+                  <meta charset="utf-8" />
+                  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                  <title>CodeFlow Diagram</title>
+                  <meta name="viewport" content="width=device-width, initial-scale=1" />
+                  <style>
+                    ${diagramCSS}
+                  </style>
+                </head>
+                <body>
+                  <canvas id="canvas"></canvas>
+                  <script>${svgJs}</script>
+                  <script>${dataPointsJS}</script>
+                  <script>${diagramJS}</script>
+                </body>
+              </html>
             `;
+            });
           });
         });
       });

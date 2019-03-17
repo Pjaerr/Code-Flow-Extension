@@ -24,7 +24,10 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
+    "dev": "npm-run-all --parallel watch grunt-watch",
+    "build": "grunt && npm run compile",
     "watch": "tsc -watch -p ./",
+    "grunt-watch": "grunt watch",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
@@ -37,9 +40,11 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.1",
     "grunt": "^1.0.3",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "node-sass": "^4.11.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^1.16.4",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1",
