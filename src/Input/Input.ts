@@ -1,40 +1,57 @@
 import * as vscode from 'vscode';
 
-//Logic/Data Functionality
 import { PushDataPoint } from '../Data/Data';
 import { DataPoint } from '../Data/DataPoint';
 
-//Input Functionality
-import { getDataPointLineNumber } from './getDataPointLineNumber';
-import { getDataPointDetail } from './getDataPointDetail';
-import { getDataPointId } from './getDataPointId';
-import { getLinkedDataPoint } from './getLinkedDataPoint';
-import {getDataPointFile} from './getDataPointFile';
+import { getLineNumberFromUser } from './UserInput/getLineNumberFromUser';
+import { getDetailFromUser } from './UserInput/getDetailFromUser';
+import { getDataPointFromUser, getLinkedDataPointFromUser } from './UserInput/getDataPointFromUser';
 
-export const CreateDataPoint = () =>
-{
-	let dataPoint = new DataPoint();
+import { generateDataPointId } from './generateDataPointId';
+import { getActiveFile } from './getActiveFile';
 
-	getDataPointLineNumber()
-		.then(lineNumber => dataPoint.lineNumber = lineNumber)
-		.then(getDataPointDetail)
-		.then(detail => dataPoint.detail = detail)
-		.then(getDataPointId)
-		.then(id => dataPoint.id = id)
-		.then(getLinkedDataPoint)
-		.then(linkedDataPoint => dataPoint.linkedDataPoint = linkedDataPoint)
-		.then(getDataPointFile)
-		.then(file => dataPoint.file = file)
-		.then(() =>
-		{
-			PushDataPoint(dataPoint);
+/**
+ * Asynchronous function that creates a new DataPoint and adds it to the global state.
+ */
+export async function CreateDataPoint() {
+  let dataPoint = new DataPoint();
 
-			vscode.window.showInformationMessage("Added data point with ID: " + dataPoint.id);
-		})
-		.catch(err => console.error(err));
-};
+  dataPoint.lineNumber = await getLineNumberFromUser();
+  dataPoint.detail = await getDetailFromUser();
+  dataPoint.id = await generateDataPointId();
 
+  let linkedDataPoint = await getLinkedDataPointFromUser();
 
+  if (linkedDataPoint !== undefined) {
+    dataPoint.linkedDataPoints.push(linkedDataPoint);
+  }
 
+  dataPoint.file = await getActiveFile();
 
+  PushDataPoint(dataPoint);
+  vscode.window.showInformationMessage('Added data point with ID: ' + dataPoint.id);
+}
 
+/**
+ * Asynchronous function that adds an additional link to an existing DataPoint and updates
+ * it on the global state.
+ */
+export async function AddAdditionalLinkToDataPoint() {
+  let currentDataPoint = await getDataPointFromUser();
+
+  if (currentDataPoint !== undefined) {
+    let newLinkedDataPoint = await getLinkedDataPointFromUser([
+      currentDataPoint,
+      ...currentDataPoint.linkedDataPoints
+    ]);
+
+    if (newLinkedDataPoint) {
+      currentDataPoint.linkedDataPoints.push(newLinkedDataPoint);
+    }
+
+    PushDataPoint(currentDataPoint);
+    vscode.window.showInformationMessage(
+      'Added addtional link to Data Point: ' + currentDataPoint.id
+    );
+  }
+}
