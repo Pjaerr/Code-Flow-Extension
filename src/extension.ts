@@ -38,15 +38,17 @@ const OnExtensionLoad = () => {
         return;
       }
 
+      /* The options that rely on user input are Async functions and as such, they catch
+      any errors thrown by a rejected Promise in here.*/
       switch (selection) {
         case CommandOption.AddDataPoint:
-          CreateDataPoint();
+          CreateDataPoint().catch(err => console.error(err));
           break;
         case CommandOption.ShowDataPoints:
           ShowDataPoints();
           break;
         case CommandOption.AddAdditionalLink:
-          AddAdditionalLinkToDataPoint();
+          AddAdditionalLinkToDataPoint().catch(err => console.error(err));
           break;
         case CommandOption.GenerateDiagram:
           GenerateDiagram();

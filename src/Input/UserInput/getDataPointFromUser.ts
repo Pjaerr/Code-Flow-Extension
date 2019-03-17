@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 
-import { DataPoint } from '../Data/DataPoint';
-import { GetDataPoints } from '../Data/Data';
-import { isDataPointInArray } from '../Utils/isDataPointInArray';
+import { DataPoint } from '../../Data/DataPoint';
+import { GetDataPoints } from '../../Data/Data';
+import { isDataPointInArray } from '../../Utils/isDataPointInArray';
 
 let dataPoints: DataPoint[] | undefined = [];
 
@@ -28,13 +28,13 @@ const setupDataPoints = (pointsToExclude?: DataPoint[]) => {
 const showQuickPicker = async (placeHolder: string, extraSelectableDataPoints?: string[]) => {
   let selectableDataPoints: string[] = [];
 
-  if (extraSelectableDataPoints) {
-    selectableDataPoints.push(...extraSelectableDataPoints);
-  }
-
   dataPointsMap.forEach((value, key) => {
     selectableDataPoints.push(key);
   });
+
+  if (extraSelectableDataPoints) {
+    selectableDataPoints.push(...extraSelectableDataPoints);
+  }
 
   const chosenDataPoint = await vscode.window.showQuickPick(selectableDataPoints, { placeHolder });
 
@@ -47,7 +47,7 @@ const showQuickPicker = async (placeHolder: string, extraSelectableDataPoints?: 
   throw Error('Link was undefined');
 };
 
-export const getDataPoint = () => {
+export const getDataPointFromUser = () => {
   return new Promise<DataPoint | undefined>((resolve, reject) => {
     setupDataPoints();
     showQuickPicker('Choose a Data Point')
@@ -56,7 +56,7 @@ export const getDataPoint = () => {
   });
 };
 
-export const getLinkedDataPoint = (pointsToExclude?: DataPoint[]) => {
+export const getLinkedDataPointFromUser = (pointsToExclude?: DataPoint[]) => {
   return new Promise<DataPoint | undefined>((resolve, reject) => {
     setupDataPoints(pointsToExclude);
     showQuickPicker('Choose another Data Point to link to', ['No Link'])

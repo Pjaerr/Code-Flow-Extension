@@ -1,6 +1,5 @@
 const scssSrcDirectory = './src/Output/diagram.scss';
 const htmlSrcDirectory = './src/Output/diagram.html';
-const d3SrcDirectory = './src/Output/d3.min.js';
 
 module.exports = function(grunt) {
   grunt.initConfig({
@@ -13,10 +12,7 @@ module.exports = function(grunt) {
     },
     copy: {
       main: {
-        files: [
-          { nonull: true, src: htmlSrcDirectory, dest: './out/Output/diagram.html' },
-          { nonull: true, src: d3SrcDirectory, dest: './out/Output/d3.min.js' }
-        ]
+        files: [{ nonull: true, src: htmlSrcDirectory, dest: './out/Output/diagram.html' }]
       }
     },
     watch: {
