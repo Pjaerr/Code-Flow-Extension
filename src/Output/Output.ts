@@ -4,7 +4,6 @@ import { DataPoint } from '../Data/DataPoint';
 import { GetDataPoints } from '../Data/Data';
 
 const fs = require('fs');
-const opn = require('opn');
 
 /**
  * Displays all of the DataPoints from the global state onto the VS Code Output window.
@@ -69,7 +68,51 @@ export const GenerateDiagram = () => {
       console.error(err);
     } else {
       vscode.window.showInformationMessage('Diagram has been generated!');
-      opn(__dirname + '/diagram.html');
+      const panel = vscode.window.createWebviewPanel(
+        'codeFlowDiagram',
+        'Code Flow Diagram',
+        vscode.ViewColumn.One,
+        {
+          enableScripts: true
+        }
+      );
+
+      let diagramJS = '';
+      let dataPointsJS = '';
+      let diagramCSS = '';
+
+      //Promisify and async/await this stuff
+      fs.readFile(__dirname + '/diagram.js', function(err: any, data: any) {
+        diagramJS = data;
+
+        fs.readFile(__dirname + '/dataPoints.js', function(err: any, data: any) {
+          dataPointsJS = data;
+
+          fs.readFile(__dirname + '/diagram.css', function(err: any, data: any) {
+            diagramCSS = data;
+
+            panel.webview.html = `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <title>CodeFlow Diagram</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <style>
+                  ${diagramCSS}
+                </style>
+              </head>
+              <body>
+                <h1 id="hello">Hello VS Code</h1>
+                <script>${dataPointsJS}</script>
+                <script>${diagramJS}</script>
+              </body>
+            </html>
+            `;
+          });
+        });
+      });
     }
   });
 };
