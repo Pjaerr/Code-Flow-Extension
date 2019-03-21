@@ -52,7 +52,7 @@ async function constructHTML(dataPoints: DataPoint[]) {
  * @param title The title of the webview
  * @param dataPoints The array of DataPoint objects that the webview will use
  *
- * @return A Promise that resolves a HTML template string.
+ * @return A Promise that resolves a vscode Webview
  */
 export const ConstructWebview = async (title: string, dataPoints: DataPoint[]) => {
   const panel = vscode.window.createWebviewPanel(

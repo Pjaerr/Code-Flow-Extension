@@ -65,7 +65,7 @@ const showQuickPicker = async (placeHolder: string, extraSelectableDataPoints?: 
  *
  * @return A Promise that resolves their chosen DataPoint
  */
-export const getDataPointFromUser = () => {
+export const GetDataPointFromUser = () => {
   return new Promise<DataPoint | undefined>((resolve, reject) => {
     setupDataPoints();
     showQuickPicker('Choose a Data Point')
@@ -81,7 +81,7 @@ export const getDataPointFromUser = () => {
  *
  * @return A Promise that resolves their chosen DataPoint
  */
-export const getLinkedDataPointFromUser = (pointsToExclude?: DataPoint[]) => {
+export const GetLinkedDataPointFromUser = (pointsToExclude?: DataPoint[]) => {
   return new Promise<DataPoint | undefined>((resolve, reject) => {
     setupDataPoints(pointsToExclude);
     showQuickPicker('Choose another Data Point to link to', ['No Link'])

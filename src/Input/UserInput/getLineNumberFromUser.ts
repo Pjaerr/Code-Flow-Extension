@@ -1,13 +1,13 @@
 import * as vscode from 'vscode';
 
-import { isANumber } from '../../Utils/ValidateInput';
+import { isANumber } from '../../Utils/isANumber';
 
 /**
  * Allow the user to enter a line number from the given file.
  *
  * @return a Promise that resolves an inputted number.
  */
-export const getLineNumberFromUser = () => {
+export const GetLineNumberFromUser = () => {
   return new Promise<string>((resolve, reject) => {
     vscode.window
       .showInputBox({ prompt: 'Line Number', validateInput: isANumber })

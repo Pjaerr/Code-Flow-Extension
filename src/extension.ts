@@ -1,9 +1,13 @@
 import * as vscode from 'vscode';
 
 import { InitialiseData } from './Data/Data';
-import { CreateDataPoint, AddAdditionalLinkToDataPoint } from './Input/Input';
-import { GenerateDiagram } from './Output/Output';
+
+import { CreateDataPoint } from './Input/CreateDataPoint';
+import { AddAdditionalLinkToDataPoint } from './Input/AddAdditionalLinkToDataPoint';
+
+import { GenerateDiagram } from './Output/GenerateDiagram';
 import { ShowDataPoints } from './Output/ShowDataPoints';
+
 import { isFileOpen } from './Utils/isFileOpen';
 
 export function activate(context: vscode.ExtensionContext) {
