@@ -24,12 +24,10 @@ export const PushDataPoint = (dataPoint: DataPoint) => {
 
   if (currentDataPoints) {
     //If the data point already exists, remove the previous version
-    for (let i = currentDataPoints.length - 1; i > 0; i--) {
-      if (currentDataPoints[i].id === dataPoint.id) {
-        currentDataPoints.splice(i, 1);
-        i = 0;
-      }
-    }
+
+    currentDataPoints = currentDataPoints.filter(
+      currentDataPoint => currentDataPoint.id !== dataPoint.id
+    );
 
     currentDataPoints.push(dataPoint);
 
