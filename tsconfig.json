@@ -3,9 +3,9 @@
     "module": "commonjs",
     "target": "es5",
     "outDir": "out",
-    "lib": ["es6"],
-    "sourceMap": true,
+    "lib": ["es6", "dom"],
     "allowJs": true,
+    "sourceMap": true,
     "rootDir": "src",
     "strict": true /* enable all strict type-checking options */
     /* Additional Checks */

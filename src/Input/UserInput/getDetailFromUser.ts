@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
  *
  * @return a Promise that resolves a string containing the inputted text
  */
-export const getDetailFromUser = () => {
+export const GetDetailFromUser = () => {
   return new Promise<string>((resolve, reject) => {
     vscode.window
       .showInputBox({ prompt: 'Information about the selected line' })

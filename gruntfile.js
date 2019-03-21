@@ -1,5 +1,5 @@
-const scssSrcDirectory = './src/Output/diagram.scss';
-const htmlSrcDirectory = './src/Output/diagram.html';
+const scssSrcDirectory = './src/Output/external/diagram.scss';
+const htmlSrcDirectory = './src/Output/external/diagram.html';
 
 module.exports = function(grunt) {
   grunt.initConfig({
@@ -37,5 +37,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('default', ['sass', 'copy']);
 };
