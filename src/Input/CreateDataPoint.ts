@@ -24,14 +24,16 @@ export async function CreateDataPoint() {
   const linkDirection = await GetLinkDirectionFromUser();
 
   if (linkDirection !== LinkDirection.NoLink) {
-    const linkedDataPoint = await GetLinkedDataPointFromUser('Choose a Data Point to link with');
-
-    if (linkedDataPoint) {
-      if (linkDirection === LinkDirection.To) {
-        dataPoint.linkedDataPoints.push(linkedDataPoint.id);
-      } else if (linkDirection === LinkDirection.From) {
-        linkedDataPoint.linkedDataPoints.push(dataPoint.id);
-        PushDataPoint(linkedDataPoint);
+    const point = await getLinkedDataPointFromUser();
+    if (point) {
+      switch (linkDirection) {
+        case LinkDirection.To:
+          point.linkedDataPoints.push(linkedDataPoint.id);
+          break;
+        case LinkDirection.From:
+          point.linkedDataPoints.push(dataPoint.id);
+          pushDataPoint(point);
+          break;
       }
     }
   }
