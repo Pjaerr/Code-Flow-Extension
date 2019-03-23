@@ -24,15 +24,15 @@ export async function CreateDataPoint() {
   const linkDirection = await GetLinkDirectionFromUser();
 
   if (linkDirection !== LinkDirection.NoLink) {
-    const point = await getLinkedDataPointFromUser();
+    const point = await GetLinkedDataPointFromUser('Choose a Data Point to link with');
     if (point) {
       switch (linkDirection) {
         case LinkDirection.To:
-          point.linkedDataPoints.push(linkedDataPoint.id);
+          point.linkedDataPoints.push(point.id);
           break;
         case LinkDirection.From:
           point.linkedDataPoints.push(dataPoint.id);
-          pushDataPoint(point);
+          PushDataPoint(point);
           break;
       }
     }
