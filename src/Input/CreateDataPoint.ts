@@ -5,6 +5,7 @@ import { DataPoint } from '../Data/DataPoint';
 
 import { GetLineNumberFromUser } from './UserInput/GetLineNumberFromUser';
 import { GetDetailFromUser } from './UserInput/GetDetailFromUser';
+import { GetLinkDirectionFromUser, LinkDirection } from './UserInput/GetLinkDirectionFromUser';
 import { GetLinkedDataPointFromUser } from './UserInput/GetDataPointFromUser';
 
 import { generateDataPointId } from '../Utils/generateDataPointId';
@@ -20,14 +21,26 @@ export async function CreateDataPoint() {
   dataPoint.detail = await GetDetailFromUser();
   dataPoint.id = await generateDataPointId();
 
-  let linkedDataPoint = await GetLinkedDataPointFromUser();
+  const linkDirection = await GetLinkDirectionFromUser();
 
-  if (linkedDataPoint !== undefined) {
-    dataPoint.linkedDataPoints.push(linkedDataPoint.id);
+  if (linkDirection !== LinkDirection.NoLink) {
+    const point = await GetLinkedDataPointFromUser('Choose a Data Point to link with');
+    if (point) {
+      switch (linkDirection) {
+        case LinkDirection.To:
+          point.linkedDataPoints.push(point.id);
+          break;
+        case LinkDirection.From:
+          point.linkedDataPoints.push(dataPoint.id);
+          PushDataPoint(point);
+          break;
+      }
+    }
   }
 
   dataPoint.file = await getActiveFile();
 
   PushDataPoint(dataPoint);
+
   vscode.window.showInformationMessage('Added data point with ID: ' + dataPoint.id);
 }

@@ -10,17 +10,19 @@ import { GetDataPointFromUser, GetLinkedDataPointFromUser } from './UserInput/Ge
  * it on the global state.
  */
 export async function AddAdditionalLinkToDataPoint() {
-  let currentDataPoint = await GetDataPointFromUser();
+  let currentDataPoint = await GetDataPointFromUser(
+    'Choose a Data Point to add an additional link to'
+  );
 
   if (currentDataPoint !== undefined) {
     let linkedDataPoints: DataPoint[] = currentDataPoint.linkedDataPoints.map(dataPointGuid => {
       return GetDataPointFromGUID(dataPointGuid);
     });
 
-    let newLinkedDataPoint = await GetLinkedDataPointFromUser([
-      currentDataPoint,
-      ...linkedDataPoints
-    ]);
+    let newLinkedDataPoint = await GetLinkedDataPointFromUser(
+      'Which data point should it link to?',
+      [currentDataPoint, ...linkedDataPoints]
+    );
 
     if (newLinkedDataPoint) {
       currentDataPoint.linkedDataPoints.push(newLinkedDataPoint.id);
