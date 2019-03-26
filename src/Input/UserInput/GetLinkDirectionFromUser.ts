@@ -9,7 +9,7 @@ export const enum LinkDirection {
 /**
  * Let the user choose a link direction
  *
- * @return Returns a LinkDirection enum
+ * @return Returns a LinkDirection enum based on the option chosen in the quick pick
  */
 export const GetLinkDirectionFromUser = async () => {
   const chosenDirection = await vscode.window.showQuickPick(
