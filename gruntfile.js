@@ -1,18 +1,18 @@
-const scssSrcDirectory = './src/Output/external/diagram.scss';
-const htmlSrcDirectory = './src/Output/external/diagram.html';
+const scssSrcDirectory = './src/Output/Diagram/diagram.scss';
+const htmlSrcDirectory = './src/Output/Diagram/diagram.html';
 
 module.exports = function(grunt) {
   grunt.initConfig({
     sass: {
       dev: {
         files: {
-          './out/Output/diagram.css': scssSrcDirectory
+          './out/Output/Diagram/diagram.css': scssSrcDirectory
         }
       }
     },
     copy: {
       main: {
-        files: [{ nonull: true, src: htmlSrcDirectory, dest: './out/Output/diagram.html' }]
+        files: [{ nonull: true, src: htmlSrcDirectory, dest: './out/Output/Diagram/diagram.html' }]
       }
     },
     watch: {
