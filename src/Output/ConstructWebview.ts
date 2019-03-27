@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { DataPoint } from '../Data/DataPoint';
 
 const readFileAsync = require('util').promisify(require('fs').readFile);
+const fs = require('fs');
 
 /**
  * Constructs a HTML template string injecting the content from the diagram.js, diagram.css and
@@ -17,9 +18,12 @@ async function constructHTML(dataPoints: DataPoint[]) {
   try {
     const dataPointsJS = `const dataPoints = ${JSON.stringify(dataPoints)}`;
 
+    //To work on the diagram outside of vs code.
+    // ! fs.writeFile(__dirname + '/Diagram/dataPoints.js', dataPointsJS, (err: any) => {});
+
     const [diagramJS, diagramCSS] = await Promise.all([
-      readFileAsync(__dirname + '/diagram.js'),
-      readFileAsync(__dirname + '/diagram.css')
+      readFileAsync(__dirname + '/Diagram/diagram.js'),
+      readFileAsync(__dirname + '/Diagram/diagram.css')
     ]);
 
     return `
@@ -35,7 +39,7 @@ async function constructHTML(dataPoints: DataPoint[]) {
           </style>
         </head>
         <body>
-          <canvas id="canvas"></canvas>
+          
           <script>${dataPointsJS}</script>
           <script>${diagramJS}</script>
         </body>

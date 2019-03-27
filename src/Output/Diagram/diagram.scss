@@ -1,4 +1,8 @@
-#canvas {
-  width: 100%;
-  height: 100%;
+.Node {
+  position: absolute;
+  border: 1px solid white;
+
+  max-width: 150px;
+  word-wrap: break-word;
+  padding: 2px;
 }
