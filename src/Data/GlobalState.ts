@@ -1,14 +1,15 @@
 import { ExtensionContext } from 'vscode';
-import { DataPoint } from './DataPoint';
+import DataPoint from './DataPoint';
 
-let ExtensionContext: ExtensionContext;
+let ExtensionContext: ExtensionContext | null = null;
 
 /**
- * Setups the global state object with a DataPoints array
+ * Setups the global state object with a DataPoints array. This must be called before
+ * any other function in GlobalState.ts can be used.
  *
  * @param context The ExtensionContext whose globalState will be used.
  */
-export const InitialiseData = (context: ExtensionContext) => {
+export const IntialiseGlobalState = (context: ExtensionContext) => {
   ExtensionContext = context;
   ExtensionContext.globalState.update('DataPoints', []);
 };
@@ -19,14 +20,17 @@ export const InitialiseData = (context: ExtensionContext) => {
  *
  * @param dataPoint The DataPoint to add.
  */
-export const PushDataPoint = (dataPoint: DataPoint) => {
+export const PushDataPointToGlobalState = (dataPoint: DataPoint) => {
+  if (ExtensionContext === null) {
+    throw new Error('You must call InitialiseGlobalState() before trying to use it.');
+  }
+
   let currentDataPoints: DataPoint[] | undefined = ExtensionContext.globalState.get('DataPoints');
 
   if (currentDataPoints) {
     //If the data point already exists, remove the previous version
-
     currentDataPoints = currentDataPoints.filter(
-      currentDataPoint => currentDataPoint.id !== dataPoint.id
+      currentDataPoint => currentDataPoint.orderId !== dataPoint.orderId
     );
 
     currentDataPoints.push(dataPoint);
@@ -40,24 +44,33 @@ export const PushDataPoint = (dataPoint: DataPoint) => {
  *
  * @return An array of DataPoints or undefined if none exist.
  */
-export const GetDataPoints = () => {
+export const GetDataPointsFromGlobalState = () => {
+  if (ExtensionContext === null) {
+    throw new Error('You must call InitialiseGlobalState() before trying to use it.');
+  }
+
   let DataPoints: DataPoint[] | undefined = ExtensionContext.globalState.get('DataPoints');
 
-  return DataPoints ? DataPoints : undefined;
+  return DataPoints;
 };
 
-export const GetDataPointFromGUID = (guid: string) => {
-  const dataPoints = GetDataPoints();
+/**
+ * Grabs the DataPoint array from global state.
+ *
+ * @return An array of DataPoints or undefined if none exist.
+ */
+export const GetDataPointByOrderIdFromGlobalState = (orderId: number) => {
+  const dataPoints = GetDataPointsFromGlobalState();
 
   if (!dataPoints) {
     throw Error('No DataPoints in the global state.');
   }
 
   for (let point of dataPoints) {
-    if (point.id === guid) {
+    if (point.orderId === orderId) {
       return point;
     }
   }
 
-  throw Error('GUID must exist on a DataPoint');
+  throw Error('orderId must exist on a DataPoint');
 };
