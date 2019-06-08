@@ -26,7 +26,14 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
+    "tests": "mocha --ui tdd ./out/Data/tests && mocha --ui tdd ./out/Input/tests && mocha --ui tdd ./out/Output/tests",
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run tests",
+      "pre-push": "npm run tests"
+    }
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
@@ -36,6 +43,7 @@
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "husky": "^2.4.0",
     "node-sass": "^4.11.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.16.4",
