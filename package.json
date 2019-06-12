@@ -26,8 +26,7 @@
     "compile": "npm run tests && tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "tests": "mocha --ui tdd ./out/Data/tests && mocha --ui tdd ./out/Input/tests && mocha --ui tdd ./out/Output/tests",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "tests": "mocha --ui tdd --require ts-node/register ./src/**/tests/*.ts"
   },
   "husky": {
     "hooks": {
@@ -47,6 +46,7 @@
     "node-sass": "^4.11.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.16.4",
+    "ts-node": "^8.2.0",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1",
     "vscode": "^1.1.28"
