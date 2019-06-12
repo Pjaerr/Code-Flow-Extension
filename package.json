@@ -23,13 +23,16 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "dev": "npm-run-all --parallel watch grunt-watch",
-    "build": "grunt && npm run compile",
+    "compile": "npm run tests && tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "grunt-watch": "grunt watch",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "tests": "mocha --ui tdd --require ts-node/register ./src/**/tests/*.ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run tests",
+      "pre-push": "npm run tests"
+    }
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
@@ -39,18 +42,13 @@
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "grunt": "^1.0.3",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-watch": "^1.1.0",
+    "husky": "^2.4.0",
     "node-sass": "^4.11.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.16.4",
+    "ts-node": "^8.2.0",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1",
     "vscode": "^1.1.28"
-  },
-  "dependencies": {
-    "uuid": "^3.3.2"
   }
 }
