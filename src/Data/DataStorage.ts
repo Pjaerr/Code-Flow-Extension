@@ -4,18 +4,6 @@ import DataPoint from './DataPoint';
 
 let Storage: Memento | null = null;
 
-//TODO:
-/*
-  The GlobalState stuff, instead of taking an extension context, let them take a class
-  that implements vscode.Memento so that in actual extension usage we can pass in
-  ExtensionContext.globalState but in the tests we can mock a vscode.Memento instance
-  that just stores to internal state. Keep in mind that we are testing the functionality
-  of GlobalState.ts, not the actual vs code apis so it doesn't matter that it isn't
-  storing stuff in the actual ExtensionContext.globalState within the test.
-
-  * Probably also want to rename this whole thing from GlobalState to DataStorage
- */
-
 /**
  * Sets up the Memento object to use as data storage.
  *
@@ -51,38 +39,44 @@ export const PushDataPointToDataStorage = (dataPoint: DataPoint) => {
   }
 };
 
-// /**
-//  * Grabs the DataPoint array from global state.
-//  *
-//  * @return An array of DataPoints or undefined if none exist.
-//  */
-// export const GetDataPointsFromGlobalState = () => {
-//   if (ExtensionContext === null) {
-//     throw new Error('You must call InitialiseGlobalState() before trying to use it.');
-//   }
+/**
+ * Grabs the DataPoint array from Storage
+ *
+ * @return An array of DataPoints. Can be an empty array
+ */
+export const GetDataPointsFromDataStorage = () => {
+  if (Storage === null) {
+    throw new Error('You must call InitialiseDataStorage() before trying to use it.');
+  }
 
-//   let DataPoints: DataPoint[] | undefined = ExtensionContext.globalState.get('DataPoints');
+  let DataPoints: DataPoint[] | undefined = Storage.get('DataPoints');
 
-//   return DataPoints;
-// };
+  if (DataPoints === undefined) {
+    throw new Error('You must call InitialiseDataStorage() before trying to use it.');
+  }
 
-// /**
-//  * Grabs the DataPoint array from global state.
-//  *
-//  * @return An array of DataPoints or undefined if none exist.
-//  */
-// export const GetDataPointByOrderIdFromGlobalState = (orderId: number) => {
-//   const dataPoints = GetDataPointsFromGlobalState();
+  return DataPoints;
+};
 
-//   if (!dataPoints) {
-//     throw Error('No DataPoints in the global state.');
-//   }
+/**
+ * Grabs a DataPoint from Storage matching a given orderId
+ *
+ * @param orderId a number matching an existing DataPoint in Storage
+ * 
+ * @return A DataPoint object
+ */
+export const GetDataPointByOrderIdFromDataStorage = (orderId: number) => {
+  const dataPoints = GetDataPointsFromDataStorage();
 
-//   for (let point of dataPoints) {
-//     if (point.orderId === orderId) {
-//       return point;
-//     }
-//   }
+  if (!dataPoints) {
+    throw Error('No DataPoints in the global state.');
+  }
 
-//   throw Error('orderId must exist on a DataPoint');
-// };
+  for (let point of dataPoints) {
+    if (point.orderId === orderId) {
+      return point;
+    }
+  }
+
+  throw Error('orderId must exist on a DataPoint');
+};
