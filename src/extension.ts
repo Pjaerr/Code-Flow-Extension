@@ -3,8 +3,11 @@ import * as vscode from 'vscode';
 import AddDataPoint from './Input/AddDataPoint';
 import GenerateDiagram from './Output/GenerateDiagram';
 import UndoDataPointAddition from './Input/UndoDataPointAddition';
+import { InitialiseDataStorage } from './Data/DataStorage';
 
 export function activate(context: vscode.ExtensionContext) {
+  InitialiseDataStorage(context.globalState);
+
   context.subscriptions.push(
     vscode.commands.registerCommand('extension.codeflow', OnExtensionLoad)
   );
