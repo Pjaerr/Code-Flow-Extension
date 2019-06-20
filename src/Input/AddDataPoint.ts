@@ -14,6 +14,7 @@ const AddDataPoint = async () => {
   try {
     const editor = Editor.fromTextEditor(vscode.window.activeTextEditor);
     const lineNumber = editor.GetActiveLineNumber();
+
     const file = editor.GetActiveFileName();
 
     const orderId = getCurrentOrderId();
@@ -27,6 +28,22 @@ const AddDataPoint = async () => {
     PushDataPointToDataStorage(dataPoint);
 
     vscode.window.showInformationMessage(`${dataPoint.name} | ${file}:${lineNumber} Created!`);
+
+    const textEditorDecorationType = vscode.window.createTextEditorDecorationType({
+      backgroundColor: 'red',
+      borderWidth: '5px',
+      borderStyle: 'solid',
+      light: {
+        borderColor: 'red'
+      },
+      dark: {
+        borderColor: 'red'
+      }
+    });
+
+    vscode.window.activeTextEditor!.setDecorations(textEditorDecorationType, [
+      new vscode.Range(lineNumber, 0, lineNumber, 0)
+    ]);
   } catch (error) {
     vscode.window.showErrorMessage(error.message);
   }
