@@ -62,7 +62,7 @@ export const GetDataPointsFromDataStorage = () => {
  * Grabs a DataPoint from Storage matching a given orderId
  *
  * @param orderId a number matching an existing DataPoint in Storage
- * 
+ *
  * @return A DataPoint object
  */
 export const GetDataPointByOrderIdFromDataStorage = (orderId: number) => {
@@ -79,4 +79,23 @@ export const GetDataPointByOrderIdFromDataStorage = (orderId: number) => {
   }
 
   throw Error('orderId must exist on a DataPoint');
+};
+
+/**
+ * Remove the last Data Point inside of the DataPoints array and then push the new array to
+ * Data Storage.
+ */
+export const RemoveLastDataPointFromDataStorage = () => {
+  if (Storage === null) {
+    throw new Error('You must call InitialiseDataStorage() before trying to use it.');
+  }
+
+  let dataPoints: DataPoint[] | undefined = Storage.get('DataPoints');
+
+  if (dataPoints && dataPoints.length > 0) {
+    dataPoints.pop();
+    Storage.update('DataPoints', dataPoints);
+  } else {
+    throw new Error('There are no more data points left to remove!');
+  }
 };
