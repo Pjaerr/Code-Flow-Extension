@@ -38,6 +38,15 @@ const GenerateDiagram = () => {
             </span>
         </div>
       `;
+
+    //If this is not the last Data Point, draw an arrow to the next point
+    if (point.orderId < dataPoints.length - 1) {
+      dataPointsHTML += `
+          <svg width="600" height="100">
+            <line x1="50%" y1="0" x2="50%" y2="100%" style="stroke:rgb(255,0,0);stroke-width:2" />
+          </svg> 
+        `;
+    }
   });
 
   panel.webview.html = `

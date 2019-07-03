@@ -4,6 +4,8 @@ export default `
         justify-content: center;
         flex-direction: column;
         align-items: center;
+
+        margin: 30px;
     }
 
     .data-point {
@@ -11,7 +13,8 @@ export default `
         height: auto;
         border: 1px solid white;
         padding: 10px;
-        margin: 30px;
+        margin-left: 30px;
+        margin-right: 30px;
         display: flex;
         flex-direction: column;
         color: #333;
