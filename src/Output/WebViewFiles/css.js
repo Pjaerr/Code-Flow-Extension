@@ -9,22 +9,27 @@ export default `
     }
 
     .data-point {
-        width: 600px;
+        max-width: 600px;
+        width: 100%;
         height: auto;
-        border: 1px solid white;
         padding: 10px;
         margin-left: 30px;
         margin-right: 30px;
         display: flex;
         flex-direction: column;
-        color: #333;
+        color: #57606f;
         background: #f5f5f5;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px;
+        border-radius: 2.5px;
     }
 
     .data-point-top-section {
         width: 100%;
         padding: initial;
-        border-bottom: 1px solid #333;
+        border-bottom: 0.5px solid rgba(51, 51, 51, 0.4);
+    }
+
+    .data-point-file {
+        word-wrap: break-word;
     }
 `;
