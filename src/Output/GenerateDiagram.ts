@@ -5,8 +5,12 @@ import { GetDataPointsFromDataStorage } from '../Data/DataStorage';
 import css from './WebViewFiles/css';
 import javascript from './WebViewFiles/javascript';
 
+//Test data
+import testData from './testData';
+
 const GenerateDiagram = () => {
-  let dataPoints = GetDataPointsFromDataStorage();
+  // let dataPoints = GetDataPointsFromDataStorage();
+  let dataPoints = testData;
 
   if (dataPoints.length > 1) {
     //Order dataPoints by their orderId
@@ -44,8 +48,13 @@ const GenerateDiagram = () => {
       if (point.orderId < dataPoints.length - 1) {
         dataPointsHTML += `
           <svg width="600" height="100">
-            <line x1="50%" y1="0" x2="50%" y2="100%" style="stroke:rgb(255,0,0);stroke-width:2" />
-          </svg> 
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="6" refX="1" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#fbc531"></path>
+            </marker>
+          </defs>
+          <line x1="50%" y1="0" x2="50%" y2="80%" stroke="#fbc531" stroke-width="2" marker-end="url(#arrow)" style="/* color: red; *//* stroke: #f5f5f5; */"></line>
+        </svg>
         `;
       }
     });
