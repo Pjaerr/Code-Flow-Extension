@@ -1,29 +1,35 @@
-# Code Flow Generator VS Code Extension
+# Code Flow - VS Code Extension
 
-**Code Flow Generator** is a Visual Studio Code extension that generates a diagram showing annotated flow between different points within your codebase.
+**Code Flow** is a Visual Studio Code extension that generates a diagram showing annotated flow between different points within your codebase.
 
-![](https://media.giphy.com/media/1YgfxVmwt6OnDWVt32/giphy.gif)
+![](https://media.giphy.com/media/THlJRdtu8OkSAhybNj/source.gif)
 
-_tiny gif of nothing so this readme doesn't look so empty_
+_tiny gif of usage so this readme doesn't look so empty_
+
+Extension Installation Link: https://marketplace.visualstudio.com/items?itemName=JoshJackson.code-flow-extension
 
 ## Contributing
 
-This extensions is a work in progress and as of writing this the core functionality is still incomplete and the extension isn't really ready to receive contributions. Once it is in a stable state and the core functionality works as expected, I will write a getting setup guide and create live github issues. Feel free to try and contribute in the mean time, although the code isn't fully documented and may be unfinished/messy in parts.
+I am happy for any sort of contributions to this project as I believe it is a very useful _idea_ and can undoubtedly be improved via open source contributions. Please feel free to work on whatever you feel can be improved and I will happily go through the pull request!
+
+If you are unsure what to work on, I have added any bugs as well as future features as Github [Issues](), so feel free to tackle any of them or offer your input.
+
+If you wish to contribute, you can follow the getting setup guide below:
 
 ### Getting Setup
 
-1. Run `npm install`
+1. Clone this repository and run `npm install`
 
-2. Run `npm run dev` to watch for both Typescript file changes and changes within Grunt (both are required for the extension to function properly)
+2. Run `npm run test` to ensure everything is working as expected (optional)
 
-3. Press f5 within vs code to debug the extension.
+3. Open the root folder in VS Code
 
-_If you want to debug the diagramming aspect of the code without having to launch vs code every time to click Generate Diagram, you can follow the guide in `diagram-testing.md`._
+4. Press F5 to debug the extension, this will open a development version of vs code.
+
+**To use the extension:** Press `CTRL + SHIFT + P` to open the command picker, type in `CodeFlow` and press enter.
 
 ## Release Notes
 
----
-
 ### 1.0.0
 
-Initial release pending...
+This is the initial release of the extension. It is very barebones but achieves the goal of generating a diagram from selected data points within a codebase.

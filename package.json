@@ -1,8 +1,10 @@
 {
-  "name": "code-flow-generator",
-  "displayName": "Code-Flow-Generator",
+  "name": "code-flow-extension",
+  "displayName": "Code Flow Extension",
   "description": "Easily show code flow within a codebase or file by generating diagrams based on the flow you specify.",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "publisher": "JoshJackson",
+  "repository": "https://github.com/Pjaerr/Code-Flow-Extension",
   "engines": {
     "vscode": "^1.31.0"
   },
