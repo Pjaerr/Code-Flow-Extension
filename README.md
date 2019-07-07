@@ -12,7 +12,7 @@ Extension Installation Link: https://marketplace.visualstudio.com/items?itemName
 
 I am happy for any sort of contributions to this project as I believe it is a very useful _idea_ and can undoubtedly be improved via open source contributions. Please feel free to work on whatever you feel can be improved and I will happily go through the pull request!
 
-If you are unsure what to work on, I have added any bugs as well as future features as Github [Issues](), so feel free to tackle any of them or offer your input.
+If you are unsure what to work on, I have added any bugs as well as future features as Github [Issues](https://github.com/Pjaerr/Code-Flow-Extension/issues), so feel free to tackle any of them or offer your input.
 
 If you wish to contribute, you can follow the getting setup guide below:
 
