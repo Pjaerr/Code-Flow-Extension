@@ -6,7 +6,7 @@ export default `
         let node = event && event.target;
         while (node) {
             if (node.tagName && node.tagName === 'A' && node.href) {
-                vscode.postMessage(node.href);
+                vscode.postMessage('{"filePath": "' + node.href + '", "lineNumber": ' + node.dataset.lineNumber + '}');
                 event.preventDefault();
                 return;
             }
