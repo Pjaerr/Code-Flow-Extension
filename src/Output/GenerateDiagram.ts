@@ -9,8 +9,8 @@ import javascript from './WebViewFiles/javascript';
 import testData from './testData';
 
 const GenerateDiagram = () => {
-  // let dataPoints = GetDataPointsFromDataStorage();
-  let dataPoints = testData;
+  let dataPoints = GetDataPointsFromDataStorage();
+  // let dataPoints = testData;
 
   if (dataPoints.length > 1) {
     //Order dataPoints by their orderId
@@ -32,7 +32,9 @@ const GenerateDiagram = () => {
         <div class="data-point">
             <span class="data-point-top-section">
                 <h2 class="data-point-name">${point.name}</h2>
-                <a class="data-point-file-link" href="${point.file}">
+                <a data-line-number="${point.lineNumber}" class="data-point-file-link" href="${
+        point.file
+      }">
                     <h4 class="data-point-file">
                     ${vscode.workspace.asRelativePath(point.file, true)}:${point.lineNumber}
                     </h4>
@@ -85,10 +87,25 @@ const GenerateDiagram = () => {
     Listen for messages being posted from our webview. If the message is a string that starts
     with file:// this means it is a local file link that we can open within the editor.
   */
-    panel.webview.onDidReceiveMessage((message: string) => {
-      if (message.startsWith('file://')) {
-        const uri = vscode.Uri.parse(message);
-        vscode.workspace.openTextDocument(uri).then(doc => vscode.window.showTextDocument(doc));
+    panel.webview.onDidReceiveMessage(async (message: string) => {
+      const data: { filePath: string; lineNumber: string } = JSON.parse(message);
+
+      if (data) {
+        const lineNumber = parseInt(data.lineNumber);
+
+        const uri = vscode.Uri.parse(data.filePath);
+
+        const doc = await vscode.workspace.openTextDocument(uri);
+
+        await vscode.window.showTextDocument(doc);
+
+        const editor = vscode.window.activeTextEditor;
+
+        if (editor) {
+          let range = editor.document.lineAt(lineNumber - 1).range;
+          editor.selection = new vscode.Selection(range.start, range.end);
+          editor.revealRange(range);
+        }
       }
     });
   } else {
