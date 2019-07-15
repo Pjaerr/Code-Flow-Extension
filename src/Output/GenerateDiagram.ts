@@ -49,13 +49,13 @@ const GenerateDiagram = () => {
       //If this is not the last Data Point, draw an arrow to the next point
       if (point.orderId < dataPoints.length - 1) {
         dataPointsHTML += `
-          <svg width="600" height="100">
-          <defs>
+          <svg class="data-point-svg-arrow" width="600" height="100">
+          <defs>  
             <marker id="arrow" markerWidth="10" markerHeight="6" refX="1" refY="3" orient="auto" markerUnits="strokeWidth">
-              <path d="M0,0 L0,6 L9,3 z" fill="#fbc531"></path>
+              <path fill="#fdcb6e" d="M0,0 L0,6 L9,3 z"></path>
             </marker>
           </defs>
-          <line x1="50%" y1="0" x2="50%" y2="80%" stroke="#fbc531" stroke-width="2" marker-end="url(#arrow)" style="/* color: red; *//* stroke: #f5f5f5; */"></line>
+          <line stroke="#fdcb6e" x1="50%" y1="0" x2="50%" y2="80%" stroke-width="2" marker-end="url(#arrow)"></line>
         </svg>
         `;
       }
