@@ -5,15 +5,11 @@ import { GetDataPointsFromDataStorage } from '../Data/DataStorage';
 import css from './WebViewFiles/css';
 import javascript from './WebViewFiles/javascript';
 
-//Test data
-import testData from './testData';
-
 const GenerateDiagram = () => {
   let dataPoints = GetDataPointsFromDataStorage();
-  // let dataPoints = testData;
 
   if (dataPoints.length > 1) {
-    //Order dataPoints by their orderId
+    //Sort dataPoints by their orderId
     dataPoints = dataPoints.sort((pointA, pointB) => pointA.orderId - pointB.orderId);
 
     const panel = vscode.window.createWebviewPanel(
@@ -67,7 +63,7 @@ const GenerateDiagram = () => {
         <head>
           <meta charset="utf-8" />
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-          <title>CodeFlow Diagram</title>
+          <title>${panel.title}</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <style>
             ${css}
@@ -83,35 +79,39 @@ const GenerateDiagram = () => {
       </html>
   `;
 
-    /*
-    Listen for messages being posted from our webview. If the message is a string that starts
-    with file:// this means it is a local file link that we can open within the editor.
-  */
-    panel.webview.onDidReceiveMessage(async (message: string) => {
-      const data: { filePath: string; lineNumber: string } = JSON.parse(message);
-
-      if (data) {
-        const lineNumber = parseInt(data.lineNumber);
-
-        const uri = vscode.Uri.parse(data.filePath);
-
-        const doc = await vscode.workspace.openTextDocument(uri);
-
-        await vscode.window.showTextDocument(doc);
-
-        const editor = vscode.window.activeTextEditor;
-
-        if (editor) {
-          let range = editor.document.lineAt(lineNumber - 1).range;
-          editor.selection = new vscode.Selection(range.start, range.end);
-          editor.revealRange(range);
-        }
-      }
-    });
+    //Listen for messages being posted from our webview.
+    panel.webview.onDidReceiveMessage(handleWebViewMessage);
   } else {
     vscode.window.showWarningMessage(
       'You must have added atleast 2 Data Points to generate a diagram!'
     );
+  }
+};
+
+const handleWebViewMessage = async (message: string) => {
+  /**
+   * When we click on a link within the WebView, we then post a message as stringified JSON
+   * which is an object with a filePath and lineNumber.
+   */
+  const data: { filePath: string; lineNumber: string } = JSON.parse(message);
+
+  if (data) {
+    const lineNumber = parseInt(data.lineNumber);
+
+    const uri = vscode.Uri.parse(data.filePath);
+
+    const doc = await vscode.workspace.openTextDocument(uri);
+
+    await vscode.window.showTextDocument(doc);
+
+    const editor = vscode.window.activeTextEditor;
+
+    //Open the text editor to the specified line number
+    if (editor) {
+      let range = editor.document.lineAt(lineNumber - 1).range;
+      editor.selection = new vscode.Selection(range.start, range.end);
+      editor.revealRange(range);
+    }
   }
 };
 
