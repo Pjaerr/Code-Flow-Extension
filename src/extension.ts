@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 
 import AddDataPoint from './Input/AddDataPoint';
 import GenerateDiagram from './Output/GenerateDiagram';
+import LoadDataPoints from './Data/LoadDataPoints';
+import SaveDataPoints from './Data/SaveDataPoints';
 import UndoDataPointAddition from './Input/UndoDataPointAddition';
 import { InitialiseDataStorage } from './Data/DataStorage';
 
@@ -16,6 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
 const enum CommandOption {
   AddDataPoint = 'Add Data Point',
   GenerateDiagram = 'Generate Diagram',
+  LoadDataPointsFromFile = 'Load Data Points from an existing file',
+  SaveDataPointsToFile = 'Save your Data Points to file',
   UndoDataPointAddition = 'Undo the last Data Point addition'
 }
 
@@ -24,6 +28,8 @@ const OnExtensionLoad = async () => {
     [
       CommandOption.AddDataPoint,
       CommandOption.GenerateDiagram,
+      CommandOption.LoadDataPointsFromFile,
+      CommandOption.SaveDataPointsToFile,
       CommandOption.UndoDataPointAddition
     ],
     { placeHolder: 'What do you want to do?' }
@@ -35,6 +41,12 @@ const OnExtensionLoad = async () => {
       break;
     case CommandOption.GenerateDiagram:
       GenerateDiagram();
+      break;
+    case CommandOption.LoadDataPointsFromFile:
+      LoadDataPoints();
+      break;
+    case CommandOption.SaveDataPointsToFile:
+      SaveDataPoints();
       break;
     case CommandOption.UndoDataPointAddition:
       UndoDataPointAddition();
