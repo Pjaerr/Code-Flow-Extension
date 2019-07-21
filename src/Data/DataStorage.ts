@@ -99,3 +99,11 @@ export const RemoveLastDataPointFromDataStorage = () => {
     throw new Error('There are no more data points left to remove!');
   }
 };
+
+export const ClearDataStorage = () => {
+  if (Storage === null) {
+    throw new Error('You must call InitialiseDataStorage() before trying to use it.');
+  }
+
+  Storage.update('DataPoints', []);
+};

@@ -2,7 +2,7 @@ const fs = require('fs');
 import * as vscode from 'vscode';
 import { GetDataPointsFromDataStorage } from './DataStorage';
 
-const SaveDataPoints = () => {
+const SaveDataPoints = async () => {
   const dataPoints = GetDataPointsFromDataStorage();
 
   if (dataPoints.length > 0) {
@@ -13,17 +13,15 @@ const SaveDataPoints = () => {
       saveLabel: 'Save'
     };
 
-    vscode.window
-      .showSaveDialog(options)
-      .then((fileData: { $mid: Number; path: string; scheme: string } | undefined | vscode.Uri) => {
-        if (fileData) {
-          const filePath = fileData.path;
+    const fileData = await vscode.window.showSaveDialog(options);
 
-          fs.writeFile(filePath.slice(1, filePath.length), JSON.stringify(dataPoints), () => {
-            vscode.window.showInformationMessage('Saved Data Points at ' + filePath);
-          });
-        }
+    if (fileData) {
+      const filePath = fileData.path;
+
+      fs.writeFile(filePath.slice(1, filePath.length), JSON.stringify(dataPoints), () => {
+        vscode.window.showInformationMessage('Saved Data Points at ' + filePath);
       });
+    }
   } else {
     vscode.window.showWarningMessage(
       'You must add a Data Point before trying to save them locally!'
