@@ -2,9 +2,10 @@
   "name": "code-flow-extension",
   "displayName": "Code Flow Extension",
   "description": "Easily show code flow within a codebase or file by generating diagrams based on the flow you specify.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "JoshJackson",
   "repository": "https://github.com/Pjaerr/Code-Flow-Extension",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.31.0"
   },
@@ -32,7 +33,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test",
       "pre-push": "npm run test"
     }
   },
