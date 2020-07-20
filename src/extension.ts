@@ -1,57 +1,27 @@
+// The module 'vscode' contains the VS Code extensibility API
+// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import AddDataPoint from './Input/AddDataPoint';
-import GenerateDiagram from './Output/GenerateDiagram';
-import LoadDataPoints from './Data/LoadDataPoints';
-import SaveDataPoints from './Data/SaveDataPoints';
-import UndoDataPointAddition from './Input/UndoDataPointAddition';
-import { InitialiseDataStorage } from './Data/DataStorage';
-
+// this method is called when your extension is activated
+// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  InitialiseDataStorage(context.globalState);
 
-  context.subscriptions.push(
-    vscode.commands.registerCommand('extension.codeflow', OnExtensionLoad)
-  );
+	// Use the console to output diagnostic information (console.log) and errors (console.error)
+	// This line of code will only be executed once when your extension is activated
+	console.log('Congratulations, your extension "code-flow-extension" is now active!');
+
+	// The command has been defined in the package.json file
+	// Now provide the implementation of the command with registerCommand
+	// The commandId parameter must match the command field in package.json
+	let disposable = vscode.commands.registerCommand('code-flow-extension.helloWorld', () => {
+		// The code you place here will be executed every time your command is executed
+
+		// Display a message box to the user
+		vscode.window.showInformationMessage('Hello World from Code-Flow-Extension!');
+	});
+
+	context.subscriptions.push(disposable);
 }
 
-const enum CommandOption {
-  AddDataPoint = 'Add Data Point',
-  GenerateDiagram = 'Generate Diagram',
-  LoadDataPointsFromFile = 'Load Data Points from an existing file',
-  SaveDataPointsToFile = 'Save your Data Points to file',
-  UndoDataPointAddition = 'Undo the last Data Point addition'
-}
-
-const OnExtensionLoad = async () => {
-  const selectedOption = await vscode.window.showQuickPick(
-    [
-      CommandOption.AddDataPoint,
-      CommandOption.GenerateDiagram,
-      CommandOption.LoadDataPointsFromFile,
-      CommandOption.SaveDataPointsToFile,
-      CommandOption.UndoDataPointAddition
-    ],
-    { placeHolder: 'What do you want to do?' }
-  );
-
-  switch (selectedOption) {
-    case CommandOption.AddDataPoint:
-      AddDataPoint();
-      break;
-    case CommandOption.GenerateDiagram:
-      GenerateDiagram();
-      break;
-    case CommandOption.LoadDataPointsFromFile:
-      LoadDataPoints();
-      break;
-    case CommandOption.SaveDataPointsToFile:
-      SaveDataPoints();
-      break;
-    case CommandOption.UndoDataPointAddition:
-      UndoDataPointAddition();
-      break;
-  }
-};
-
+// this method is called when your extension is deactivated
 export function deactivate() {}
