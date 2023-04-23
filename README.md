@@ -1,7 +1,5 @@
 # Code Flow - VS Code Extension
 
-**NOTICE: A new extension has been released called Grok (https://www.trygrok.com/) which essentially does what this extension aspired to if I carried on working on/rebuilding it but like a million times better.**
-
 **Code Flow** is a Visual Studio Code extension that generates a diagram showing annotated flow between different points within your codebase.
 
 I created this extension as a way to help map out my thoughts around how a codebase, or particular part of a codebase, is structured without having to leave the context of the code to write up a diagram.
